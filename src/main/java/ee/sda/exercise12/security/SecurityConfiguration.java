@@ -21,7 +21,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
               antMatchers(HttpMethod.POST, "/api/cars").authenticated().
 
               // paths starting with /api/users/ require authority ROLE_USER_ADMIN
-              antMatchers("/api/users/**").hasRole("USER_ADMIN").
+              antMatchers("/api/users/**").hasAuthority("ROLE_USER_ADMIN").
 
               anyRequest().permitAll(). // all other paths do not require authentication
               and().formLogin(). // Automatically generated login form
@@ -36,8 +36,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
       //user admin with the roles ADMIN and CARS
       amb.inMemoryAuthentication().withUser("admin").password(password).roles("ADMIN", "CARS").
 
-         // user admin2 with authority role USER_ADMIN
-         and().withUser("admin2").password(password).roles("USER_ADMIN").
+         // user admin2 with authority ROLE_USER_ADMIN
+         and().withUser("admin2").password(password).authorities("ROLE_USER_ADMIN").
 
          // user admin3 with role CARS
          and().withUser("admin3").password(password).roles("CARS");
